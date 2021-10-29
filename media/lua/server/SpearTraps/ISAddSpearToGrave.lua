@@ -42,16 +42,17 @@ function ISAddSpearToGrave:perform()
 		local itemType = self.spear:getFullType()
 		local itemCondition = self.spear:getCondition()
 		local itemRepair = self.spear:getHaveBeenRepaired()
+
+		ISBaseTimedAction.perform(self)
+		self.character:setPrimaryHandItem(nil)
+		self.character:getInventory():Remove(self.spear)
+
 		table.insert(spears, {
 			name = itemName,
 			itemType = itemType,
 			condition = itemCondition,
 			repair = itemRepair,
 		})
-
-		ISBaseTimedAction.perform(self)
-		self.character:setPrimaryHandItem(nil)
-		self.character:getInventory():Remove(self.spear)
 
 		local grave = #spears % 2 == 1 and self.grave or self.grave2
 		local sq = grave:getSquare()

@@ -103,12 +103,15 @@ end
 
 function breakSpear(grave)
 
-	-- TODO: Remove one spear tile from a grave
+	-- TODO: Remove one spear tile from the grave
+
 	local spearIndex = findNonBrokenSpear(grave)
 	if spearIndex > 0 then
 		local data = grave:getModData()
 		data['spears'][spearIndex].condition = 0
 		grave:transmitModData()
+	else
+		print('ERROR: breakSpear failed! ' .. tostring(spearIndex))
 	end
 end
 
@@ -137,7 +140,7 @@ function getOtherSquare(grave)
 end
 
 function getGrave(square)
-	for i=0, square:getSpecialObjects():size()-1 do
+	for i=0, square:getSpecialObjects():size() - 1 do
 		local grave = square:getSpecialObjects():get(i)
 		if grave:getName() == 'EmptyGraves' then
 			return grave
